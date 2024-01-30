@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %} trains {% endblock title %}
+{% block content %}
+    <h1>Trains list</h1>
+    <div class="row">
+        <div class="col-md-8 mx-auto my-3">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Train name</th>
+                    <th>City of departure</th>
+                    <th>City of arrival</th>
+                    <th>Travel time</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in page_obj %}
+                    <tr>
+                        <td>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'trains:train_detail' pk=object.pk %}">{{ object.name }}</a>
+                            {% else %}
+                                {{ object.name }}
+                            {% endif %}
+                        </td>
+                        <td>{{ object.from_city }}</td>
+                        <td>{{ object.to_city }}</td>
+                        <td>{{ object.travel_time }}</td>
+                        {% if user.is_authenticated %}
+                            <td>
+                                <a href="{% url 'trains:train_update' pk=object.pk %}">
+                                    <button type="submit" class="btn btn-info">Update</button>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'trains:train_delete' pk=object.pk %}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span></a>
+                {% endif %}
+            </li>
+            {% for page in page_obj.paginator.page_range %}
+
+                <li class="{% if page == page_obj.number %} active {% endif %}">
+                    <a class="page-link" href="?page={{ page }}">{{ page }}
+                    </a>
+                </li>
+            {% endfor %}
+            <li>
+                {% if page_obj.has_next %}
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+
+{% endblock content %}

@@ -1,0 +1,1 @@
+web: gunicorn euro_trains.wsgi --log-file -

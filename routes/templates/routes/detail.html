@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} Router | {{ object.name }} {% endblock title %}
+{% block content %}
+    <h1>Route {{ object.name }} details</h1>
+    <div class="row">
+        <div class="col-md mx-auto">
+            <table class="table">
+                <thead>
+                </tr>
+                <th>Route name</th>
+                <th>City of departure</th>
+                <th>City of arrival</th>
+                <th>Travel time</th>
+                <th>Trains list</th>
+                <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        {{ object.name }}
+                    </td>
+                    <td>
+                        {{ object.from_city }}
+                    </td>
+                    <td>
+                        {{ object.to_city }}
+                    </td>
+                    <td>
+                        {{ object.overall_travel_time }}
+                    </td>
+                    <td>
+                        {% for train in object.trains.all %}
+                            {{ train }} <br>
+                        {% endfor %}
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </br>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{% url 'routes:all_routes' %}">
+                <button type="button" class="btn btn-info"> Back to the routes list</button>
+            </a>
+        </div>
+    </div>
+
+{% endblock content %}

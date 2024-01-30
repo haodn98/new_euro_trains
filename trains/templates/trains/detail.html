@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} trains | {{ city.name }} {% endblock title %}
+{% block content %}
+    <h1>trains list</h1>
+    <div class="row">
+        <div class="div col-md">
+            <p>Train name: {{ object.name }}</p>
+        </div>
+        <div class="div col-md">
+            <p>City of departure: {{ object.from_city }}</p>
+        </div>
+        <div class="div col-md">
+            <p>City of arrival: {{ object.to_city }}</p>
+        </div>
+        <div class="div col-md">
+            <p>Travel time : {{ object.travel_time }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{% url 'trains:train_update' pk=train.pk %}">
+                <button type="button" class="btn btn-info"> Update</button>
+            </a>
+        </div>
+    </div>
+    </br>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{% url 'trains:all_trains' %}">
+                <button type="button" class="btn btn-info"> Back to the list</button>
+            </a>
+        </div>
+    </div>
+
+{% endblock content %}
